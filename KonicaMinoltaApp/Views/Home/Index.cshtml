@@ -1,0 +1,96 @@
+﻿@{
+  ViewBag.Title = "Home Page";
+}
+@{ 
+  List<string> fileData = new List<string>();
+  if(Session["fileData"] != null)
+  {
+    fileData = (List<string>)Session["fileData"];
+  }
+}
+
+<div class="row margin-top-20">
+  <div class="col-sm-12">
+    <canvas id="canvas" dir="ltr" width="1100" height="400"> </canvas>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-9">
+    <div class="row margin-bottom-10">
+      <div class="col-sm-12">
+        <label class=" margin-right-20" for="fileUploader">Upload a File:</label>
+        <input type="file" class="form-control-file forceInline" id="fileUploader">
+      </div>
+    </div>
+    <div class="row margin-bottom-10">
+      <div class="col-sm-6">
+        <label class="margin-right-20" for="canvasfontColor">Choose Color:</label>
+        <input id="fontColor" type="color" />
+      </div>
+    </div>
+    <div class="row margin-bottom-10">
+      <div class="col-sm-6">
+        <label class="margin-right-20" for="canvasText">Choose Font Size:</label>
+        <select id="fontSize" class="form-control">
+          <option value="12px">12</option>
+          <option value="14px">14</option>
+          <option value="16px">16</option>
+          <option value="18px">18</option>
+          <option value="20px">20</option>
+          <option value="22px">22</option>
+          <option value="24px">24</option>
+          <option value="28px">28</option>
+        </select>
+      </div>
+    </div>
+    <div class="row margin-bottom-10">
+      <div class="col-sm-6">
+        <label class="e margin-right-20" for="canvasText">Add Text:</label>
+        <input class="form-control " type="text" onchange="PopulateCanvas();" id="canvasText" />
+      </div>
+    </div>
+
+    <div class="row margin-bottom-10">
+      <div class="col-sm-6">
+        @using (Ajax.BeginForm("SendEmail", "Home", new
+        AjaxOptions
+        {
+          OnBegin = "return ValidateSendEmail()",
+          OnSuccess = "HandleSendEmail"
+        },
+        new
+        {
+          id = "sendEmail",
+          name = "SendEmail"
+        }
+        ))
+        {
+          <input type="hidden" name="DataURL" id="canvasImageURL" />
+          <label class="margin-right-20" for="sendEmail-Reciever">Recipient Email: </label>
+          <input class="form-control" name="Email" id="sendEmail-Reciever" />
+        }
+      </div>
+    </div>
+    <div class="row margin-bottom-10">
+      <div class="col-sm-1">
+        <button class="btn btn-primary" id="" type="" onclick="$('#sendEmail').submit();">Send Email</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3" style="max-height:400px; overflow-y:auto" >
+    <p><b>Recently Sent:</b></p>
+    @{
+      if (fileData != null)
+      {
+        foreach (string path in fileData)
+        {
+          <div class="row margin-bottom-10">
+            <div  onclick="RestoreHistoryImage('@path')" class="col-sm-12">
+              <img style="width: 100%;" src="@path" />
+            </div>
+          </div>
+        }
+      }
+    }
+  </div>
+</div>
