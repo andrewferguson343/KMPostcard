@@ -4,7 +4,6 @@
 var img = new Image();
 
 
-
 $('#fileUploader').change(function (e) {
   img.onload = PopulateCanvas;
   img.src = URL.createObjectURL(this.files[0]);
@@ -39,38 +38,41 @@ function GetDataUrl() {
  
 }
 
-function AddText() {
-  var canvas = document.getElementById('canvas');
-  var context = canvas.getContext('2d');
-  var msg = "";
-  context.clearRect(20, 100, 20, 100);
+
+function PopulateErrorPanel(message) {
+  var errorPanel = $('#errorPanel');
+  if (message != "") {
+    errorPanel.html('<p>' + message + '</p>')
+    errorPanel.css("border", "1px solid red");
+  }
 }
 
 function RestoreHistoryImage(data) {
-  alert(data);
   img.src = data;
   PopulateCanvas();
 }
 
-function ValidateSendEmail() {
+function ValidateSendEmail(prevImage) {
   var errorFlag = false;
+  var errorMessage = "";
   var email = $('#sendEmail-Reciever').val();
   var data = $('#canvasImageURL').val();
 
-  alert(email);
   if (email === "" | !email.includes("@")) {
     errorFlag = true;
-    alert("Email is not entered correctly");
+    PopulateErrorPanel("Email is not entered correctly");
   }
-  alert(data);
-  if (data === "") {
+  if (data === "" | data == prevImage) {
     errorFlag = true;
-    alert("No image is loaded");
+    PopulateErrorPanel("No image is loaded");
   }
-  alert(errorFlag);
   return !errorFlag;
 }
 
 function HandleSendEmail(e) {
+
   location.reload();
+  
+
+
 }

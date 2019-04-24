@@ -40,6 +40,12 @@ textarea {
   margin-bottom: 20px;
 }
 
+#errorPanel{
+  text-align:center;
+  padding-top:5px;
+}
+
 .forceInline {
   display: inline !important;
 }
+

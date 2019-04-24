@@ -56,27 +56,33 @@ namespace KonicaMinoltaApp.Controllers
           bw.Close();
         }
       }
-      
-      Attachment attach = new Attachment(filePath);
-      //create and populate mail message object
-      MailMessage mail = new MailMessage("KMAndrewF@gmail.com", detectedEmail);
-      SmtpClient client = new SmtpClient();
-      client.Port = 25;
-      client.DeliveryMethod = SmtpDeliveryMethod.Network;
-      client.UseDefaultCredentials = false;
-      client.Credentials = new System.Net.NetworkCredential("KMAndrewF@gmail.com", "KMAF9*91");
-      client.EnableSsl = true;
-      client.Host = "smtp.gmail.com";
-      mail.Subject = "Your friend sent you a post card!";
-      mail.Body = "The card is attached!";
-      mail.Attachments.Add(attach);
-      client.Send(mail);
+      try
+      {
+        Attachment attach = new Attachment(filePath);
+        //create and populate mail message object
+        MailMessage mail = new MailMessage("KMAndrewF@gmail.com", detectedEmail);
+        SmtpClient client = new SmtpClient();
+        client.Port = 25;
+        client.DeliveryMethod = SmtpDeliveryMethod.Network;
+        client.UseDefaultCredentials = false;
+        client.Credentials = new System.Net.NetworkCredential("KMAndrewF@gmail.com", "KMAF9*91");
+        client.EnableSsl = true;
+        client.Host = "smtp.gmail.com";
+        mail.Subject = "Your friend sent you a post card!";
+        mail.Body = "The card is attached!";
+        mail.Attachments.Add(attach);
+        client.Send(mail);
 
-      //For history, Add to session variable
-      List<string> fileData = (List<string>)Session["fileData"];
-      fileData.Add(originalBase64);
-      Session["fileData"] = fileData;
+        //For history, Add to session variable
+        List<string> fileData = (List<string>)Session["fileData"];
+        fileData.Add(originalBase64);
+        Session["fileData"] = fileData;
+      }
 
+      catch (Exception e)
+      {
+        Console.Write("An Error Occurred");
+      }
       return View("Index");
     }
   }

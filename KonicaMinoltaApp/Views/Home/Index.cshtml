@@ -9,10 +9,14 @@
   }
 }
 
+
 <div class="row margin-top-20">
-  <div class="col-sm-12">
+  <div class="col-sm-12" style="text-align:center;">
     <canvas id="canvas" dir="ltr" width="1100" height="400"> </canvas>
   </div>
+</div>
+<div class="row margin-bottom-10 margin-top-20">
+  <div class="col-sm-12" id="errorPanel"></div>
 </div>
 <div class="row">
   <div class="col-sm-9">
@@ -45,7 +49,7 @@
     </div>
     <div class="row margin-bottom-10">
       <div class="col-sm-6">
-        <label class="e margin-right-20" for="canvasText">Add Text:</label>
+        <label class="margin-right-20" for="canvasText">Add Text:</label>
         <input class="form-control " type="text" onchange="PopulateCanvas();" id="canvasText" />
       </div>
     </div>
@@ -55,7 +59,7 @@
         @using (Ajax.BeginForm("SendEmail", "Home", new
         AjaxOptions
         {
-          OnBegin = "return ValidateSendEmail()",
+          OnBegin = "return ValidateSendEmail('" + (fileData.Count > 0 ? fileData[fileData.Count - 1].ToString() : string.Empty ) +  "')",
           OnSuccess = "HandleSendEmail"
         },
         new
@@ -73,7 +77,7 @@
     </div>
     <div class="row margin-bottom-10">
       <div class="col-sm-1">
-        <button class="btn btn-primary" id="" type="" onclick="$('#sendEmail').submit();">Send Email</button>
+        <button class="btn btn-primary" type="button" onclick="$('#sendEmail').submit();">Send Email</button>
       </div>
     </div>
   </div>
