@@ -1,5 +1,5 @@
 ## Postcard Generator
-I chose to develop the postcard generator because it is ain a similar application domain as what I usually build, 
+I chose to develop the postcard generator because it is in a similar application domain to what I usually build, 
 but also had some requirements that were unlike any other projects I have developed before. I felt that in building this
 app I could show my proficiency not only in creating applciations, but also in learning new skills within a short time frame.
 I used the .Net framework to show my proficiency with the microsoft stack and backend programming.
